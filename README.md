@@ -4,7 +4,7 @@ A desktop application built with **JavaFX** as the primary UI framework, with le
 **Swing** components embedded inside it using `SwingNode`. The goal is to show that
 both toolkits can live in one window and share the same application state.
 
-## Team
+## Team: Group 9
 
 | Name | Roll No. |
 |------|----------|
