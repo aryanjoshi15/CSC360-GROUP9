@@ -1,23 +1,20 @@
 # JavaFX + Swing Desktop Application
 
-> Group project — Semester _[fill in]_ · Course _[fill in]_
-
 A desktop application built with **JavaFX** as the primary UI framework, with legacy
 **Swing** components embedded inside it using `SwingNode`. The goal is to show that
 both toolkits can live in one window and share the same application state.
 
 ## Team
 
-| Name | Roll No. | Responsibility |
-|------|----------|----------------|
-| _[name]_ | | JavaFX views & layout |
-| _[name]_ | | Swing components & bridge |
-| _[name]_ | | Model / data layer |
-| _[name]_ | | Styling, testing, docs |
+| Name | Roll No. |
+|------|----------|
+| _[Jevis Maniyar](https://github.com/Quack-Duck12)_ | AU2520311 |
+| _[Aryan Joshi](https://github.com/aryanjoshi15)_ | AU2500017 |
+| _[name]_ | |
 
 ## Tech stack
 
-- **Java 17** (LTS)
+- **Java 21**
 - **JavaFX 21** — `javafx-controls`, `javafx-fxml`, `javafx-swing`
 - **Swing** — part of the JDK, embedded via `SwingNode`
 - **Maven** — build and dependency management
@@ -61,10 +58,12 @@ JavaFX uses a three-level hierarchy, and we follow it strictly:
 ## Running it
 
 ```bash
+git clone --depth=1 https://github.com/aryanjoshi15/CSC360-GROUP9.git
+cd CSC360-GROUP9
 mvn clean javafx:run
 ```
 
-Requires JDK 17+ on the PATH. No separate JavaFX SDK install is needed — Maven
+Requires JDK 21+ on the PATH. No separate JavaFX SDK install is needed — Maven
 pulls the platform-specific artifacts.
 
 ## Development stages
