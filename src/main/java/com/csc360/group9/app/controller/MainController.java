@@ -1,4 +1,7 @@
-package com.example;
+package com.csc360.group9.app.controller;
+
+import com.csc360.group9.app.MainApp;
+import com.csc360.group9.app.model.User;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -15,10 +18,10 @@ public class MainController {
     @FXML private ProgressBar progressBar;
     @FXML private Label statusLabel;
 
-    private SwingJavaFX swingApplication;
+    private MainApp mainApplication;
 
-    public void setSwingApplication(SwingJavaFX application) {
-        this.swingApplication = application;
+    public void setMainApplication(MainApp application) {
+        this.mainApplication = application;
     }
 
     @FXML
@@ -41,16 +44,16 @@ public class MainController {
     @FXML
     private void handleSearch() {
         statusLabel.setText("Searching for: " + searchField.getText());
-        if (swingApplication != null)
-            swingApplication.updateSwingStatus("JavaFX search executed");
+        if (mainApplication != null)
+            mainApplication.updateSwingStatus("JavaFX search executed");
     }
 
     @FXML
     private void handleAddUser() {
         userTable.getItems().add(new User("New User", "new@example.com", "Active"));
         statusLabel.setText("User added");
-        if (swingApplication != null)
-            swingApplication.updateSwingStatus("JavaFX added a user");
+        if (mainApplication != null)
+            mainApplication.updateSwingStatus("JavaFX added a user");
     }
 
     @FXML
@@ -64,8 +67,8 @@ public class MainController {
 
         userTable.getItems().remove(selected);
         statusLabel.setText("User deleted");
-        if (swingApplication != null)
-            swingApplication.updateSwingStatus("User deleted");
+        if (mainApplication != null)
+            mainApplication.updateSwingStatus("User deleted");
     }
 
     @FXML
@@ -89,8 +92,8 @@ public class MainController {
 
             Platform.runLater(() -> {
                 statusLabel.setText("Processing complete");
-                if (swingApplication != null)
-                    swingApplication.updateSwingStatus("JavaFX processing complete");
+                if (mainApplication != null)
+                    mainApplication.updateSwingStatus("JavaFX processing complete");
             });
         });
 

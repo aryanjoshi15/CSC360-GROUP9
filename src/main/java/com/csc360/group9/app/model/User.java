@@ -1,4 +1,4 @@
-package com.example;
+package com.csc360.group9.app.model;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

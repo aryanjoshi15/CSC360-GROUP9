@@ -1,4 +1,6 @@
-package com.example;
+package com.csc360.group9.app;
+
+import com.csc360.group9.app.controller.MainController;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -13,7 +15,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.*;
 
-public class SwingJavaFX {
+public class MainApp {
     private JFrame frame;
     private JLabel statusLabel;
     private JLabel windowSizeLabel;
@@ -21,7 +23,7 @@ public class SwingJavaFX {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            SwingJavaFX app = new SwingJavaFX();
+            MainApp app = new MainApp();
             app.createSwingGUI();
             app.createJavaFXGUI();
         });
@@ -132,19 +134,19 @@ public class SwingJavaFX {
         Platform.runLater(() -> {
             try {
                 FXMLLoader loader = new FXMLLoader(
-                        SwingJavaFX.class.getResource("/com/example/main.fxml"));
+                        MainApp.class.getResource("/com/csc360/group9/app/fxml/main.fxml"));
 
                 Parent root = loader.load();
 
                 Scene scene = new Scene(root);
 
                 scene.getStylesheets().add(
-                        SwingJavaFX.class.getResource("/com/example/style.css").toExternalForm());
+                        MainApp.class.getResource("/com/csc360/group9/app/css/style.css").toExternalForm());
 
                 fxPanel.setScene(scene);
 
                 MainController controller = loader.getController();
-                controller.setSwingApplication(this);
+                controller.setMainApplication(this);
 
             } catch (Exception e) {
                 e.printStackTrace();

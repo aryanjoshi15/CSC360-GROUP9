@@ -44,7 +44,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>com.example.SwingJavaFX</mainClass>
+                    <mainClass>com.csc360.group9.app.MainApp</mainClass>
                 </configuration>
             </plugin>
         </plugins>
