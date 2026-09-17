@@ -10,7 +10,7 @@ both toolkits can live in one window and share the same application state.
 |------|----------|
 | _[Jevis Maniyar](https://github.com/Quack-Duck12)_ | AU2520311 |
 | _[Aryan Joshi](https://github.com/aryanjoshi15)_ | AU2500017 |
-| _[name]_ | |
+| _[S.Kailash](https://github.com/kailash1557)_ |AU2520033 |
 
 ## Tech stack
 
