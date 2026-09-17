@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class MainController {
     @FXML private TextField searchField;
@@ -29,9 +30,9 @@ public class MainController {
         filterBox.setItems(FXCollections.observableArrayList("All", "Active", "Inactive"));
         filterBox.setValue("All");
 
-        nameColumn.setCellValueFactory(data -> data.getValue().nameProperty());
-        emailColumn.setCellValueFactory(data -> data.getValue().emailProperty());
-        statusColumn.setCellValueFactory(data -> data.getValue().statusProperty());
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         userTable.setItems(FXCollections.observableArrayList(
                 new User("Alice", "alice@example.com", "Active"),

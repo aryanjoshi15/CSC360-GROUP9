@@ -148,8 +148,8 @@ public class MainApp {
                 MainController controller = loader.getController();
                 controller.setMainApplication(this);
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (java.io.IOException e) {
+                java.util.logging.Logger.getLogger(MainApp.class.getName()).log(java.util.logging.Level.SEVERE, "Failed to load FXML", e);
                 SwingUtilities.invokeLater(() ->
                     JOptionPane.showMessageDialog(frame,
                             "Failed to load FXML:\n" + e.getMessage(),
