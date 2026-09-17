@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4783dc29-983e-421c-ae21-712394a86b40" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="9" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.3935020128636135" />
+      <entry key="MS500" value="2.759207942849285" />
+      <entry key="S2" value="4.37447018442165" />
+      <entry key="S5" value="5.811267148876651" />
+      <entry key="S10" value="6.970693789921743" />
+      <entry key="S30" value="8.189679679040147" />
+      <entry key="S60" value="8.575031788281988" />
+      <entry key="M2" value="8.782298052184757" />
+      <entry key="M5" value="8.911631237076227" />
+      <entry key="M10" value="8.955597906689409" />
+      <entry key="M15" value="8.970349995632468" />
+      <entry key="M30" value="8.985150636041446" />
+      <entry key="H1" value="8.992569216797595" />
+      <entry key="H2" value="8.996283081743464" />
+      <entry key="H4" value="8.998141159039072" />
+      <entry key="D1" value="8.999690140126528" />
+      <entry key="W1" value="8.999955733004501" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="0.0" />
+      <entry key="M2" value="0.0" />
+      <entry key="M5" value="0.0" />
+      <entry key="M10" value="0.0" />
+      <entry key="M15" value="0.0" />
+      <entry key="M30" value="0.0" />
+      <entry key="H1" value="0.0" />
+      <entry key="H2" value="0.0" />
+      <entry key="H4" value="0.0" />
+      <entry key="D1" value="0.0" />
+      <entry key="W1" value="0.0" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="1.3314119912769076" />
+      <entry key="MS500" value="2.732790523252915" />
+      <entry key="S2" value="4.34350062129391" />
+      <entry key="S5" value="5.7675820215558655" />
+      <entry key="S10" value="6.935570088088183" />
+      <entry key="S30" value="8.173471851001382" />
+      <entry key="S60" value="8.566234015369368" />
+      <entry key="M2" value="8.777714199988223" />
+      <entry key="M5" value="8.90975175417824" />
+      <entry key="M10" value="8.95465037565893" />
+      <entry key="M15" value="8.969716567316656" />
+      <entry key="M30" value="8.984833048904461" />
+      <entry key="H1" value="8.99241020451483" />
+      <entry key="H2" value="8.996203520864727" />
+      <entry key="H4" value="8.99810136490801" />
+      <entry key="D1" value="8.999683505869102" />
+      <entry key="W1" value="8.99995478520685" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3JMNEpWFxEKaElwl31rlq9O2QX2" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.JavaFXSwingCommunicationDemo.executor": "Run",
+    "Maven.swing-javafx-fxml [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
+    "Maven.swing-javafx-fxml [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "Maven.swing-javafx-fxml.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "test",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.JavaFXSwingCommunicationDemo">
+    <configuration name="JavaFXSwingCommunicationDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.csc360.group9.app.JavaFXSwingCommunicationDemo" />
+      <module name="swing-javafx-fxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.csc360.group9.app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="swing-javafx-fxml" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="cmdOptions" />
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list />
+            </option>
+            <option name="multimoduleDir" />
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="projectsCmdOptionValues">
+              <list />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.JavaFXSwingCommunicationDemo" />
+      <item itemvalue="Maven.swing-javafx-fxml" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.JavaFXSwingCommunicationDemo" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-34e2839f716b-intellij.indexing.shared.core-IU-262.9437.185" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.9437.185" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4783dc29-983e-421c-ae21-712394a86b40" name="Changes" comment="" />
+      <created>1789466868581</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1789466868581</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
