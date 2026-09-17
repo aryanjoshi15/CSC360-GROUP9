@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4783dc29-983e-421c-ae21-712394a86b40" name="Changes" comment="" />
+    <list default="true" id="4783dc29-983e-421c-ae21-712394a86b40" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="9" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -79,10 +78,10 @@
       <entry key="W1" value="8.99995478520685" />
     </decayedShown>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2,
-  "fromUser": false
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2,
+  &quot;fromUser&quot;: false
+}</component>
   <component name="ProjectId" id="3JMNEpWFxEKaElwl31rlq9O2QX2" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -91,8 +90,10 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.JavaFXSwingCommunicationDemo.executor": "Run",
+    "Maven.swing-javafx-fxml [clean].executor": "Run",
     "Maven.swing-javafx-fxml [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
     "Maven.swing-javafx-fxml [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "Maven.swing-javafx-fxml [test].executor": "Run",
     "Maven.swing-javafx-fxml.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.MCP Project settings loaded": "true",
@@ -101,9 +102,10 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "test",
+    "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/aryanjoshi/Documents/GitHub/CSC360-GROUP9",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -112,19 +114,15 @@
     "to.speed.mode.migration.done": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.JavaFXSwingCommunicationDemo">
-    <configuration name="JavaFXSwingCommunicationDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.csc360.group9.app.JavaFXSwingCommunicationDemo" />
-      <module name="swing-javafx-fxml" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.csc360.group9.app.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2" />
     </configuration>
     <configuration name="swing-javafx-fxml" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
       <MavenSettings>
@@ -154,15 +152,6 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
-    <list>
-      <item itemvalue="Application.JavaFXSwingCommunicationDemo" />
-      <item itemvalue="Maven.swing-javafx-fxml" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.JavaFXSwingCommunicationDemo" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
