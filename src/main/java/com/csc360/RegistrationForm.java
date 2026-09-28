@@ -14,16 +14,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 // ====== Swing imports ======
-<<<<<<< HEAD
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.SwingUtilities;
-
-/**
- * Registration form with JavaFX controls and embedded Swing components.
- * Swing JComboBox and JCheckBox are embedded via SwingNode.
- *
-=======
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -38,7 +28,6 @@ import javax.swing.SwingUtilities;
  * JavaFX provides: Label, TextField, Button, and the main window.
  * Swing provides:  JComboBox, JCheckBox, JRadioButtons, JSlider (via SwingNode).
  * 
->>>>>>> 557094d92ccce8255e10eab1a9440552399964a2
  * Run with: mvn javafx:run
  */
 public class RegistrationForm extends Application {
@@ -46,11 +35,8 @@ public class RegistrationForm extends Application {
     // Swing components — shared between EDT and JavaFX threads
     private JComboBox<String> courseBox;
     private JCheckBox agreeBox;
-<<<<<<< HEAD
-=======
     private JRadioButton fallRadio, springRadio, summerRadio;
     private JSlider ratingSlider;
->>>>>>> 557094d92ccce8255e10eab1a9440552399964a2
 
     @Override
     public void start(Stage stage) {
@@ -77,9 +63,6 @@ public class RegistrationForm extends Application {
             courseNode.setContent(courseBox);
         });
 
-<<<<<<< HEAD
-        // 2) Agreement checkbox (JCheckBox)
-=======
         // 2) Semester radio buttons (JRadioButton)
         Label semesterLabel = new Label("Semester:");
         SwingNode semesterNode = new SwingNode();
@@ -120,7 +103,6 @@ public class RegistrationForm extends Application {
         });
 
         // 4) Agreement checkbox (JCheckBox)
->>>>>>> 557094d92ccce8255e10eab1a9440552399964a2
         SwingNode checkNode = new SwingNode();
         SwingUtilities.invokeLater(() -> {
             agreeBox = new JCheckBox("I agree to the terms");
@@ -142,9 +124,6 @@ public class RegistrationForm extends Application {
             SwingUtilities.invokeLater(() -> {
                 String course  = (String) courseBox.getSelectedItem();
                 boolean agreed = agreeBox.isSelected();
-<<<<<<< HEAD
-
-=======
                 int rating     = ratingSlider.getValue();
 
                 String semester = "Fall";
@@ -152,16 +131,12 @@ public class RegistrationForm extends Application {
                 if (summerRadio.isSelected()) semester = "Summer";
 
                 String finalSemester = semester;
->>>>>>> 557094d92ccce8255e10eab1a9440552399964a2
                 Platform.runLater(() ->
                     resultLabel.setText(
                         "Name: " + name
                         + ",  Course: " + course
-<<<<<<< HEAD
-=======
                         + ",  Semester: " + finalSemester
                         + ",  Rating: " + rating
->>>>>>> 557094d92ccce8255e10eab1a9440552399964a2
                         + ",  Agreed: " + (agreed ? "Yes" : "No")
                     )
                 );
@@ -174,11 +149,8 @@ public class RegistrationForm extends Application {
             title,
             nameLabel, nameField,
             courseLabel, courseNode,
-<<<<<<< HEAD
-=======
             semesterLabel, semesterNode,
             sliderLabel, sliderNode,
->>>>>>> 557094d92ccce8255e10eab1a9440552399964a2
             checkNode,
             submitBtn,
             resultLabel
@@ -189,11 +161,7 @@ public class RegistrationForm extends Application {
         // ==================== Window ====================
 
         stage.setTitle("Registration Form");
-<<<<<<< HEAD
-        stage.setScene(new Scene(root, 400, 380));
-=======
         stage.setScene(new Scene(root, 400, 480));
->>>>>>> 557094d92ccce8255e10eab1a9440552399964a2
         stage.show();
     }
 
