@@ -11,22 +11,24 @@ This project creates one JavaFX window containing both **JavaFX** and **Swing** 
 - **Swing components** are created on the Event Dispatch Thread (`SwingUtilities.invokeLater`)
 - **JavaFX controls** are updated on the JavaFX Application Thread (`Platform.runLater`)
 
-When the user fills in the form and clicks **Submit**, all values (from both toolkits) are collected and displayed in a summary label.
+### Key Features
+- **Form Validation**: Submitting only proceeds if all fields are filled (Name provided, Course picked) and the user has agreed to the terms.
+- **SGPA & 4.0 Grading**: A Swing `JSlider` allows selecting an SGPA from `0.0` to `4.0` (in `0.1` increments), with real-time conversion to letter grades (`A`, `B+`, `B`, `B-`, `C+`, `C`, `D`, `F`) dynamically displayed on a JavaFX label.
 
 ---
 
 ## UI Components
 
-| Component              | Toolkit    | Purpose                                      |
-|------------------------|------------|----------------------------------------------|
-| `Label`                | JavaFX     | Title — "Registration Form"                  |
-| `TextField`            | JavaFX     | Text input for the student's name            |
-| `JComboBox`            | Swing      | Dropdown to pick a course (Java, Python, C++)|
-| `JRadioButton` (×3)    | Swing      | Radio buttons to select a semester           |
-| `JSlider`              | Swing      | Slider (1–10) to rate experience             |
-| `JCheckBox`            | Swing      | Checkbox — "I agree to the terms"            |
-| `Button`               | JavaFX     | Submit button to display the summary         |
-| `Label`                | JavaFX     | Result label showing collected form data     |
+| Component              | Toolkit    | Purpose                                              |
+|------------------------|------------|------------------------------------------------------|
+| `Label`                | JavaFX     | Title — "Registration Form"                          |
+| `TextField`            | JavaFX     | Text input for the student's name (required)         |
+| `JComboBox`            | Swing      | Dropdown to pick a course (Java, Python, C++)        |
+| `JRadioButton` (×3)    | Swing      | Radio buttons to select a semester (Fall/Spring/Summer)|
+| `JSlider`              | Swing      | SGPA slider (`0.0` – `4.0`) with grade evaluation    |
+| `JCheckBox`            | Swing      | Checkbox — "I agree to the terms" (required)         |
+| `Button`               | JavaFX     | Submit button (validates and displays output)        |
+| `Label`                | JavaFX     | Result label (shows error or success summary)        |
 
 ---
 
@@ -35,6 +37,7 @@ When the user fills in the form and clicks **Submit**, all values (from both too
 ```
 CSC360-GROUP9/
 ├── pom.xml                                        # Maven build config
+├── README.md                                      # Documentation
 └── src/
     └── main/
         └── java/
@@ -56,22 +59,28 @@ Everything lives in one file — no CSS, no FXML, no extra windows.
 
 ## How to Run
 
+### Option 1: Terminal
 ```bash
 mvn javafx:run
 ```
 
-Maven will download the required JavaFX libraries automatically on first run.
+### Option 2: IDE "Run / Debug"
+You can directly click **Run** or **Debug** in your IDE (IntelliJ IDEA, VS Code, Antigravity IDE, NetBeans) thanks to the built-in launcher pattern and `exec-maven-plugin` configuration.
 
 ---
 
-## Dependencies
+## Grading Scale (Out of 4.0)
 
-Defined in `pom.xml`:
-
-| Dependency             | Version | Purpose                           |
-|------------------------|---------|-----------------------------------|
-| `javafx-controls`      | 21.0.2  | Core JavaFX UI controls           |
-| `javafx-swing`         | 21.0.2  | `SwingNode` for embedding Swing   |
+| SGPA Range  | Letter Grade |
+|-------------|--------------|
+| 3.7 – 4.0   | **A**        |
+| 3.3 – 3.6   | **B+**       |
+| 3.0 – 3.2   | **B**        |
+| 2.7 – 2.9   | **B-**       |
+| 2.3 – 2.6   | **C+**       |
+| 2.0 – 2.2   | **C**        |
+| 1.0 – 1.9   | **D**        |
+| 0.0 – 0.9   | **F**        |
 
 ---
 
@@ -92,13 +101,14 @@ Defined in `pom.xml`:
 │                                 │
 │  • JComboBox, JCheckBox         │
 │  • JRadioButtons, JSlider       │──── reads course, semester,
-│                                 │     rating, agreed
+│                                 │     SGPA, agreement
 └─────────────────────────────────┘          │
                                              ▼
                                    Platform.runLater()
                                              │
                                              ▼
                                    JavaFX result label updated
+                                   (validates inputs & shows status)
 ```
 
 ---

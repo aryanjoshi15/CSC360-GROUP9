@@ -14,9 +14,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 // ====== Swing imports ======
+import java.util.Hashtable;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
@@ -26,7 +28,7 @@ import javax.swing.SwingUtilities;
  * Simple registration form showing JavaFX and Swing working together.
  * 
  * JavaFX provides: Label, TextField, Button, and the main window.
- * Swing provides:  JComboBox, JCheckBox, JRadioButtons, JSlider (via SwingNode).
+ * Swing provides:  JComboBox, JCheckBox, JRadioButtons, JSlider for SGPA (via SwingNode).
  * 
  * Run with: mvn javafx:run or directly via IDE Run/Debug.
  */
@@ -42,7 +44,19 @@ public class RegistrationForm {
         private JComboBox<String> courseBox;
         private JCheckBox agreeBox;
         private JRadioButton fallRadio, springRadio, summerRadio;
-        private JSlider ratingSlider;
+        private JSlider sgpaSlider;
+
+        // Convert SGPA (out of 4.0) to letter grade
+        private String getGrade(double gpa) {
+            if (gpa >= 3.7) return "A";
+            if (gpa >= 3.3) return "B+";
+            if (gpa >= 3.0) return "B";
+            if (gpa >= 2.7) return "B-";
+            if (gpa >= 2.3) return "C+";
+            if (gpa >= 2.0) return "C";
+            if (gpa >= 1.0) return "D";
+            return "F";
+        }
 
         @Override
         public void start(Stage stage) {
@@ -57,7 +71,7 @@ public class RegistrationForm {
             Label nameLabel = new Label("Name:");
             TextField nameField = new TextField();
             nameField.setPromptText("Enter your name");
-            nameField.setMaxWidth(250);
+            nameField.setMaxWidth(260);
 
             // ==================== Swing Components ====================
 
@@ -90,22 +104,34 @@ public class RegistrationForm {
                 semesterNode.setContent(panel);
             });
 
-            // 3) Rating slider (JSlider 1–10)
-            Label sliderLabel = new Label("Rating: 5");
-            SwingNode sliderNode = new SwingNode();
+            // 3) SGPA Slider (JSlider 0.0 - 4.0, values 0-40 step 1 = 0.1)
+            Label sgpaLabel = new Label("SGPA: 3.5 / 4.0 (Grade: A)");
+            SwingNode sgpaNode = new SwingNode();
             SwingUtilities.invokeLater(() -> {
-                ratingSlider = new JSlider(1, 10, 5);
-                ratingSlider.setMajorTickSpacing(1);
-                ratingSlider.setPaintTicks(true);
-                ratingSlider.setPaintLabels(true);
+                sgpaSlider = new JSlider(0, 40, 35);
+                sgpaSlider.setMajorTickSpacing(10);
+                sgpaSlider.setMinorTickSpacing(5);
+                sgpaSlider.setPaintTicks(true);
+                sgpaSlider.setPaintLabels(true);
 
-                // Live-update the JavaFX label when slider moves
-                ratingSlider.addChangeListener(e ->
+                // Custom labels: 0.0, 1.0, 2.0, 3.0, 4.0
+                Hashtable<Integer, JLabel> labels = new Hashtable<>();
+                labels.put(0, new JLabel("0.0"));
+                labels.put(10, new JLabel("1.0"));
+                labels.put(20, new JLabel("2.0"));
+                labels.put(30, new JLabel("3.0"));
+                labels.put(40, new JLabel("4.0"));
+                sgpaSlider.setLabelTable(labels);
+
+                // Live-update the JavaFX label as slider moves
+                sgpaSlider.addChangeListener(e -> {
+                    double gpa = sgpaSlider.getValue() / 10.0;
+                    String grade = getGrade(gpa);
                     Platform.runLater(() ->
-                        sliderLabel.setText("Rating: " + ratingSlider.getValue())
-                    )
-                );
-                sliderNode.setContent(ratingSlider);
+                        sgpaLabel.setText(String.format("SGPA: %.1f / 4.0 (Grade: %s)", gpa, grade))
+                    );
+                });
+                sgpaNode.setContent(sgpaSlider);
             });
 
             // 4) Agreement checkbox (JCheckBox)
@@ -115,37 +141,59 @@ public class RegistrationForm {
                 checkNode.setContent(agreeBox);
             });
 
-            // ==================== JavaFX: Submit & Result ====================
+            // ==================== JavaFX: Submit & Validation ====================
 
             Label resultLabel = new Label();
-            resultLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #2e7d32;");
+            resultLabel.setStyle("-fx-font-size: 13px;");
             resultLabel.setWrapText(true);
 
             Button submitBtn = new Button("Submit");
             submitBtn.setOnAction(e -> {
-                // Read the JavaFX text field (already on FX thread)
+                // Read JavaFX name field
                 String name = nameField.getText().trim();
 
-                // Read Swing values on the EDT, then show result on FX thread
+                // Read Swing values on the EDT
                 SwingUtilities.invokeLater(() -> {
                     String course  = (String) courseBox.getSelectedItem();
                     boolean agreed = agreeBox.isSelected();
-                    int rating     = ratingSlider.getValue();
+                    double gpa     = sgpaSlider.getValue() / 10.0;
+                    String grade   = getGrade(gpa);
 
                     String semester = "Fall";
                     if (springRadio.isSelected()) semester = "Spring";
                     if (summerRadio.isSelected()) semester = "Summer";
 
+                    // Validation checks: all fields must be filled and terms agreed
+                    String error = null;
+                    if (name.isEmpty()) {
+                        error = "Please enter your name.";
+                    } else if (course == null || course.isEmpty()) {
+                        error = "Please select a course.";
+                    } else if (!agreed) {
+                        error = "You must agree to the terms before submitting.";
+                    }
+
+                    String finalError = error;
                     String finalSemester = semester;
-                    Platform.runLater(() ->
-                        resultLabel.setText(
-                            "Name: " + name
-                            + ",  Course: " + course
-                            + ",  Semester: " + finalSemester
-                            + ",  Rating: " + rating
-                            + ",  Agreed: " + (agreed ? "Yes" : "No")
-                        )
-                    );
+
+                    // Update JavaFX UI
+                    Platform.runLater(() -> {
+                        if (finalError != null) {
+                            // Show error in red
+                            resultLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #d32f2f;");
+                            resultLabel.setText("❌ " + finalError);
+                        } else {
+                            // Show success summary in green
+                            resultLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #2e7d32;");
+                            resultLabel.setText(
+                                "✔ Registered successfully!\n"
+                                + "Name: " + name
+                                + ", Course: " + course
+                                + ", Semester: " + finalSemester
+                                + ", SGPA: " + String.format("%.1f/4.0", gpa) + " (" + grade + ")"
+                            );
+                        }
+                    });
                 });
             });
 
@@ -156,7 +204,7 @@ public class RegistrationForm {
                 nameLabel, nameField,
                 courseLabel, courseNode,
                 semesterLabel, semesterNode,
-                sliderLabel, sliderNode,
+                sgpaLabel, sgpaNode,
                 checkNode,
                 submitBtn,
                 resultLabel
@@ -167,7 +215,7 @@ public class RegistrationForm {
             // ==================== Window ====================
 
             stage.setTitle("Registration Form");
-            stage.setScene(new Scene(root, 400, 480));
+            stage.setScene(new Scene(root, 420, 520));
             stage.show();
         }
     }
