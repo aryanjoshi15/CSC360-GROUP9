@@ -28,144 +28,147 @@ import javax.swing.SwingUtilities;
  * JavaFX provides: Label, TextField, Button, and the main window.
  * Swing provides:  JComboBox, JCheckBox, JRadioButtons, JSlider (via SwingNode).
  * 
- * Run with: mvn javafx:run
+ * Run with: mvn javafx:run or directly via IDE Run/Debug.
  */
-public class RegistrationForm extends Application {
-
-    // Swing components — shared between EDT and JavaFX threads
-    private JComboBox<String> courseBox;
-    private JCheckBox agreeBox;
-    private JRadioButton fallRadio, springRadio, summerRadio;
-    private JSlider ratingSlider;
-
-    @Override
-    public void start(Stage stage) {
-
-        // ==================== JavaFX Components ====================
-
-        // Title
-        Label title = new Label("Registration Form");
-        title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
-
-        // Name field
-        Label nameLabel = new Label("Name:");
-        TextField nameField = new TextField();
-        nameField.setPromptText("Enter your name");
-        nameField.setMaxWidth(250);
-
-        // ==================== Swing Components ====================
-
-        // 1) Course dropdown (JComboBox)
-        Label courseLabel = new Label("Course:");
-        SwingNode courseNode = new SwingNode();
-        SwingUtilities.invokeLater(() -> {
-            courseBox = new JComboBox<>(new String[]{"Java", "Python", "C++"});
-            courseNode.setContent(courseBox);
-        });
-
-        // 2) Semester radio buttons (JRadioButton)
-        Label semesterLabel = new Label("Semester:");
-        SwingNode semesterNode = new SwingNode();
-        SwingUtilities.invokeLater(() -> {
-            fallRadio = new JRadioButton("Fall", true);
-            springRadio = new JRadioButton("Spring");
-            summerRadio = new JRadioButton("Summer");
-
-            // Group them so only one can be selected
-            ButtonGroup group = new ButtonGroup();
-            group.add(fallRadio);
-            group.add(springRadio);
-            group.add(summerRadio);
-
-            JPanel panel = new JPanel();
-            panel.add(fallRadio);
-            panel.add(springRadio);
-            panel.add(summerRadio);
-            semesterNode.setContent(panel);
-        });
-
-        // 3) Rating slider (JSlider 1–10)
-        Label sliderLabel = new Label("Rating: 5");
-        SwingNode sliderNode = new SwingNode();
-        SwingUtilities.invokeLater(() -> {
-            ratingSlider = new JSlider(1, 10, 5);
-            ratingSlider.setMajorTickSpacing(1);
-            ratingSlider.setPaintTicks(true);
-            ratingSlider.setPaintLabels(true);
-
-            // Live-update the JavaFX label when slider moves
-            ratingSlider.addChangeListener(e ->
-                Platform.runLater(() ->
-                    sliderLabel.setText("Rating: " + ratingSlider.getValue())
-                )
-            );
-            sliderNode.setContent(ratingSlider);
-        });
-
-        // 4) Agreement checkbox (JCheckBox)
-        SwingNode checkNode = new SwingNode();
-        SwingUtilities.invokeLater(() -> {
-            agreeBox = new JCheckBox("I agree to the terms");
-            checkNode.setContent(agreeBox);
-        });
-
-        // ==================== JavaFX: Submit & Result ====================
-
-        Label resultLabel = new Label();
-        resultLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #2e7d32;");
-        resultLabel.setWrapText(true);
-
-        Button submitBtn = new Button("Submit");
-        submitBtn.setOnAction(e -> {
-            // Read the JavaFX text field (already on FX thread)
-            String name = nameField.getText().trim();
-
-            // Read Swing values on the EDT, then show result on FX thread
-            SwingUtilities.invokeLater(() -> {
-                String course  = (String) courseBox.getSelectedItem();
-                boolean agreed = agreeBox.isSelected();
-                int rating     = ratingSlider.getValue();
-
-                String semester = "Fall";
-                if (springRadio.isSelected()) semester = "Spring";
-                if (summerRadio.isSelected()) semester = "Summer";
-
-                String finalSemester = semester;
-                Platform.runLater(() ->
-                    resultLabel.setText(
-                        "Name: " + name
-                        + ",  Course: " + course
-                        + ",  Semester: " + finalSemester
-                        + ",  Rating: " + rating
-                        + ",  Agreed: " + (agreed ? "Yes" : "No")
-                    )
-                );
-            });
-        });
-
-        // ==================== Layout ====================
-
-        VBox root = new VBox(10,
-            title,
-            nameLabel, nameField,
-            courseLabel, courseNode,
-            semesterLabel, semesterNode,
-            sliderLabel, sliderNode,
-            checkNode,
-            submitBtn,
-            resultLabel
-        );
-        root.setPadding(new Insets(20));
-        root.setAlignment(Pos.CENTER_LEFT);
-
-        // ==================== Window ====================
-
-        stage.setTitle("Registration Form");
-        stage.setScene(new Scene(root, 400, 480));
-        stage.show();
-    }
+public class RegistrationForm {
 
     public static void main(String[] args) {
-        launch(args);
+        Application.launch(App.class, args);
+    }
+
+    public static class App extends Application {
+
+        // Swing components — shared between EDT and JavaFX threads
+        private JComboBox<String> courseBox;
+        private JCheckBox agreeBox;
+        private JRadioButton fallRadio, springRadio, summerRadio;
+        private JSlider ratingSlider;
+
+        @Override
+        public void start(Stage stage) {
+
+            // ==================== JavaFX Components ====================
+
+            // Title
+            Label title = new Label("Registration Form");
+            title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+
+            // Name field
+            Label nameLabel = new Label("Name:");
+            TextField nameField = new TextField();
+            nameField.setPromptText("Enter your name");
+            nameField.setMaxWidth(250);
+
+            // ==================== Swing Components ====================
+
+            // 1) Course dropdown (JComboBox)
+            Label courseLabel = new Label("Course:");
+            SwingNode courseNode = new SwingNode();
+            SwingUtilities.invokeLater(() -> {
+                courseBox = new JComboBox<>(new String[]{"Java", "Python", "C++"});
+                courseNode.setContent(courseBox);
+            });
+
+            // 2) Semester radio buttons (JRadioButton)
+            Label semesterLabel = new Label("Semester:");
+            SwingNode semesterNode = new SwingNode();
+            SwingUtilities.invokeLater(() -> {
+                fallRadio = new JRadioButton("Fall", true);
+                springRadio = new JRadioButton("Spring");
+                summerRadio = new JRadioButton("Summer");
+
+                // Group them so only one can be selected
+                ButtonGroup group = new ButtonGroup();
+                group.add(fallRadio);
+                group.add(springRadio);
+                group.add(summerRadio);
+
+                JPanel panel = new JPanel();
+                panel.add(fallRadio);
+                panel.add(springRadio);
+                panel.add(summerRadio);
+                semesterNode.setContent(panel);
+            });
+
+            // 3) Rating slider (JSlider 1–10)
+            Label sliderLabel = new Label("Rating: 5");
+            SwingNode sliderNode = new SwingNode();
+            SwingUtilities.invokeLater(() -> {
+                ratingSlider = new JSlider(1, 10, 5);
+                ratingSlider.setMajorTickSpacing(1);
+                ratingSlider.setPaintTicks(true);
+                ratingSlider.setPaintLabels(true);
+
+                // Live-update the JavaFX label when slider moves
+                ratingSlider.addChangeListener(e ->
+                    Platform.runLater(() ->
+                        sliderLabel.setText("Rating: " + ratingSlider.getValue())
+                    )
+                );
+                sliderNode.setContent(ratingSlider);
+            });
+
+            // 4) Agreement checkbox (JCheckBox)
+            SwingNode checkNode = new SwingNode();
+            SwingUtilities.invokeLater(() -> {
+                agreeBox = new JCheckBox("I agree to the terms");
+                checkNode.setContent(agreeBox);
+            });
+
+            // ==================== JavaFX: Submit & Result ====================
+
+            Label resultLabel = new Label();
+            resultLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #2e7d32;");
+            resultLabel.setWrapText(true);
+
+            Button submitBtn = new Button("Submit");
+            submitBtn.setOnAction(e -> {
+                // Read the JavaFX text field (already on FX thread)
+                String name = nameField.getText().trim();
+
+                // Read Swing values on the EDT, then show result on FX thread
+                SwingUtilities.invokeLater(() -> {
+                    String course  = (String) courseBox.getSelectedItem();
+                    boolean agreed = agreeBox.isSelected();
+                    int rating     = ratingSlider.getValue();
+
+                    String semester = "Fall";
+                    if (springRadio.isSelected()) semester = "Spring";
+                    if (summerRadio.isSelected()) semester = "Summer";
+
+                    String finalSemester = semester;
+                    Platform.runLater(() ->
+                        resultLabel.setText(
+                            "Name: " + name
+                            + ",  Course: " + course
+                            + ",  Semester: " + finalSemester
+                            + ",  Rating: " + rating
+                            + ",  Agreed: " + (agreed ? "Yes" : "No")
+                        )
+                    );
+                });
+            });
+
+            // ==================== Layout ====================
+
+            VBox root = new VBox(10,
+                title,
+                nameLabel, nameField,
+                courseLabel, courseNode,
+                semesterLabel, semesterNode,
+                sliderLabel, sliderNode,
+                checkNode,
+                submitBtn,
+                resultLabel
+            );
+            root.setPadding(new Insets(20));
+            root.setAlignment(Pos.CENTER_LEFT);
+
+            // ==================== Window ====================
+
+            stage.setTitle("Registration Form");
+            stage.setScene(new Scene(root, 400, 480));
+            stage.show();
+        }
     }
 }
