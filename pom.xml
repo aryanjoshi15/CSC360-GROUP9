@@ -59,6 +59,17 @@
                     </options>
                 </configuration>
             </plugin>
+
+            <!-- Exec Maven Plugin for IDE Run/Debug -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <executable>java</executable>
+                    <mainClass>com.csc360.RegistrationForm</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
