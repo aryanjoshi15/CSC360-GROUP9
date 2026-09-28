@@ -1,98 +1,108 @@
-# JavaFX + Swing Desktop Application
+# Registration Form — JavaFX + Swing Demo
 
-A desktop application built with **JavaFX** as the primary UI framework, with legacy
-**Swing** components embedded inside it using `SwingNode`. The goal is to show that
-both toolkits can live in one window and share the same application state.
+A simple desktop registration form built for **CSC 360** that demonstrates JavaFX and Swing components working together in a single window using `SwingNode`.
 
-## Team: Group 9
+---
 
-| Name | Roll No. |
-|------|----------|
-| _[Jevis Maniyar](https://github.com/Quack-Duck12)_ | AU2520311 |
-| _[Aryan Joshi](https://github.com/aryanjoshi15)_ | AU2500017 |
-| _[S.Kailash](https://github.com/kailash1557)_ |AU2520033 |
+## Overview
 
-## Tech stack
+This project creates one JavaFX window containing both **JavaFX** and **Swing** UI components. Swing components are embedded inside the JavaFX scene using `SwingNode`, and proper threading is used throughout:
 
-- **Java 21**
-- **JavaFX 21**: `javafx-controls`, `javafx-fxml`, `javafx-swing`
-- **Swing**: part of the JDK, embedded via `SwingNode`
-- **Maven**: build and dependency management tool
-- **Git**: version control
+- **Swing components** are created on the Event Dispatch Thread (`SwingUtilities.invokeLater`)
+- **JavaFX controls** are updated on the JavaFX Application Thread (`Platform.runLater`)
 
-## Running it
+When the user fills in the form and clicks **Submit**, all values (from both toolkits) are collected and displayed in a summary label.
+
+---
+
+## UI Components
+
+| Component              | Toolkit    | Purpose                                      |
+|------------------------|------------|----------------------------------------------|
+| `Label`                | JavaFX     | Title — "Registration Form"                  |
+| `TextField`            | JavaFX     | Text input for the student's name            |
+| `JComboBox`            | Swing      | Dropdown to pick a course (Java, Python, C++)|
+| `JRadioButton` (×3)    | Swing      | Radio buttons to select a semester           |
+| `JSlider`              | Swing      | Slider (1–10) to rate experience             |
+| `JCheckBox`            | Swing      | Checkbox — "I agree to the terms"            |
+| `Button`               | JavaFX     | Submit button to display the summary         |
+| `Label`                | JavaFX     | Result label showing collected form data     |
+
+---
+
+## Project Structure
+
+```
+CSC360-GROUP9/
+├── pom.xml                                        # Maven build config
+└── src/
+    └── main/
+        └── java/
+            └── com/
+                └── csc360/
+                    └── RegistrationForm.java      # Single-file application
+```
+
+Everything lives in one file — no CSS, no FXML, no extra windows.
+
+---
+
+## Prerequisites
+
+- **Java 17+** (tested with Java 26)
+- **Maven 3.8+**
+
+---
+
+## How to Run
 
 ```bash
-git clone --depth=1 https://github.com/aryanjoshi15/CSC360-GROUP9.git
-cd CSC360-GROUP9
-mvn clean javafx:run
-```
-Requires JDK 21+ and Maven on the PATH. No separate JavaFX SDK install is needed - Maven
-pulls the platform-specific artifacts.
-
-## Project structure
-
-```
-javafx-swing-app/
-├── pom.xml
-├── README.md
-└── src/main/
-    ├── java/com/example/app/
-    │   ├── MainApp.java        # entry point, builds the Stage
-    │   ├── ui/                 # JavaFX views and layouts
-    │   ├── swing/              # Swing panels + SwingNode bridge
-    │   ├── controller/         # event handling, wiring
-    │   └── model/              # data classes, business logic
-    └── resources/com/example/app/
-        ├── css/                # stylesheets
-        ├── fxml/               # FXML layouts
-        └── images/             # icons, assets
+mvn javafx:run
 ```
 
-## How the window is put together
+Maven will download the required JavaFX libraries automatically on first run.
 
-JavaFX uses a three-level hierarchy, and we follow it strictly:
+---
 
-1. **Stage** - the actual OS window. Created once in `MainApp.start()`. Owns the
-   title, size, minimum size, icon and close behaviour.
-2. **Scene** - the container for everything drawn inside the window. Holds the
-   root node and the attached stylesheet.
-3. **Scene graph** - the tree of nodes (`BorderPane` → toolbars, panels, controls).
-   Swing components enter this tree wrapped in a `SwingNode`.
+## Dependencies
 
-> **Threading rule:** JavaFX code runs on the JavaFX Application Thread; Swing code
-> runs on the Event Dispatch Thread. Always build Swing content inside
-> `SwingUtilities.invokeLater(...)` and push updates back with `Platform.runLater(...)`.
-> Mixing these up is the single most common bug in this kind of project.
+Defined in `pom.xml`:
 
-## Development stages
+| Dependency             | Version | Purpose                           |
+|------------------------|---------|-----------------------------------|
+| `javafx-controls`      | 21.0.2  | Core JavaFX UI controls           |
+| `javafx-swing`         | 21.0.2  | `SwingNode` for embedding Swing   |
 
-### Stage 1 - Setup (done)
-Repository created, Maven project configured, package structure in place, `MainApp`
-launches an empty `Stage` with a title and fixed minimum size. Everyone can build
-and run the project locally.
+---
 
-### Stage 2 - Layout skeleton
-Build the main `BorderPane` shell: menu bar on top, navigation on the left, content
-area in the centre, status bar at the bottom. All regions are placeholders. No
-business logic yet.
+## Threading Model
 
-### Stage 3 - JavaFX components
-Fill the content area with real JavaFX controls - forms, tables, buttons, dialogs.
-Apply the stylesheet so the look is consistent across screens.
+```
+┌─────────────────────────────────┐
+│   JavaFX Application Thread     │
+│                                 │
+│  • TextField, Button, Labels    │
+│  • Button click handler starts  │──── reads name ────┐
+│                                 │                    │
+└─────────────────────────────────┘                    │
+                                                       ▼
+┌─────────────────────────────────┐     SwingUtilities.invokeLater()
+│   Swing EDT (Event Dispatch     │
+│          Thread)                │
+│                                 │
+│  • JComboBox, JCheckBox         │
+│  • JRadioButtons, JSlider       │──── reads course, semester,
+│                                 │     rating, agreed
+└─────────────────────────────────┘          │
+                                             ▼
+                                   Platform.runLater()
+                                             │
+                                             ▼
+                                   JavaFX result label updated
+```
 
-### Stage 4 - Swing integration
-Create the Swing panels and embed them with `SwingNode`. Verify the threading rule
-holds: JavaFX buttons can update Swing panels and the other way round without
-freezing the UI.
+---
 
-### Stage 5 - Model and wiring
-Add the data classes and connect controllers to them, so both the JavaFX and Swing
-sides read from and write to the same state.
+## Authors
 
-### Stage 6 - Polish and testing
-Input validation, error dialogs, window icon, keyboard shortcuts, resizing checks.
-Test on each member's machine (Windows / Linux / macOS as applicable).
-
-### Stage 7 - Submission
-Finalise this README, add screenshots, write the report, and tag the release.
+**CSC 360 — Group 9**
