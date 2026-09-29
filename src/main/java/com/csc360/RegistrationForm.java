@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -72,6 +73,14 @@ public class RegistrationForm {
             TextField nameField = new TextField();
             nameField.setPromptText("Enter your name");
             nameField.setMaxWidth(260);
+
+            // Real-time input filter: allow only letters and spaces (block numbers & special characters)
+            nameField.setTextFormatter(new TextFormatter<>(change -> {
+                if (change.getControlNewText().matches("[a-zA-Z\\s]*")) {
+                    return change;
+                }
+                return null;
+            }));
 
             // ==================== Swing Components ====================
 
@@ -169,7 +178,9 @@ public class RegistrationForm {
                         error = "Please enter your name.";
                     } else if (name.chars().anyMatch(Character::isDigit)) {
                         error = "Name must not contain numbers.";
-                    }   else if (course == null || course.isEmpty()) {
+                    } else if (!name.matches("[a-zA-Z\\s]+")) {
+                        error = "Name can only contain letters and spaces.";
+                    } else if (course == null || course.isEmpty()) {
                         error = "Please select a course.";
                     } else if (!agreed) {
                         error = "You must agree to the terms before submitting.";
