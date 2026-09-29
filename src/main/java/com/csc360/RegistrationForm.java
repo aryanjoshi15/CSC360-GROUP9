@@ -167,7 +167,9 @@ public class RegistrationForm {
                     String error = null;
                     if (name.isEmpty()) {
                         error = "Please enter your name.";
-                    } else if (course == null || course.isEmpty()) {
+                    } else if (name.chars().anyMatch(Character::isDigit)) {
+                        error = "Name must not contain numbers.";
+                    }   else if (course == null || course.isEmpty()) {
                         error = "Please select a course.";
                     } else if (!agreed) {
                         error = "You must agree to the terms before submitting.";
