@@ -4,6 +4,7 @@ target/
 # IDE files
 .idea/
 *.iml
+.vscode/
 
 # Maven wrapper (not needed)
 .mvn/
