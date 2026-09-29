@@ -1,5 +1,10 @@
 # Registration Form — JavaFX + Swing Demo
 
+![Java Version](https://img.shields.io/badge/Java-17%2B-orange?logo=openjdk)
+![JavaFX](https://img.shields.io/badge/JavaFX-27-blue?logo=java)
+![Maven](https://img.shields.io/badge/Maven-3.8%2B-red?logo=apache-maven)
+![Course](https://img.shields.io/badge/Course-CSC%20360-informational)
+
 A simple desktop registration form built for **CSC 360** that demonstrates JavaFX and Swing components working together in a single window using `SwingNode`.
 
 ---
@@ -12,8 +17,43 @@ This project creates one JavaFX window containing both **JavaFX** and **Swing** 
 - **JavaFX controls** are updated on the JavaFX Application Thread (`Platform.runLater`)
 
 ### Key Features
-- **Form Validation**: Submitting only proceeds if all fields are filled (Name provided, Course picked) and the user has agreed to the terms.
+- **Real-Time Input Filtering**: The student name field automatically blocks numbers and special characters as the user types using a JavaFX `TextFormatter`.
+- **Form Validation**: Comprehensive checks ensure all fields are properly completed and mandatory terms are accepted before submission.
 - **SGPA & 4.0 Grading**: A Swing `JSlider` allows selecting an SGPA from `0.0` to `4.0` (in `0.1` increments), with real-time conversion to letter grades (`A`, `B+`, `B`, `B-`, `C+`, `C`, `D`, `F`) dynamically displayed on a JavaFX label.
+- **Dynamic Visual Feedback**: Instant visual confirmation with contextual color coding for error states (crimson) and success summaries (forest green).
+
+---
+
+## Input Validation & Feedback Rules
+
+The application implements a two-tier validation mechanism to safeguard input integrity:
+
+### 1. Real-Time Input Filtering (JavaFX `TextFormatter`)
+The `TextField` for the student's name is attached to a filter that only permits alphabetic characters and whitespace:
+```java
+nameField.setTextFormatter(new TextFormatter<>(change -> {
+    if (change.getControlNewText().matches("[a-zA-Z\\s]*")) {
+        return change;
+    }
+    return null; // Rejects keystroke immediately
+}));
+```
+Any attempts to enter numeric digits, punctuation, or special symbols are discarded before reaching the input buffer.
+
+### 2. Submit-Time Validation Checklist
+Upon clicking the **Submit** button, the following validations execute sequentially:
+
+| Check | Target Component | Validation Logic | Error Message |
+|-------|------------------|------------------|---------------|
+| **Name Presence** | `nameField` (JavaFX) | `name.isEmpty()` | `"Please enter your name."` |
+| **Digit Guard** | `nameField` (JavaFX) | `name.chars().anyMatch(Character::isDigit)` | `"Name must not contain numbers."` |
+| **Character Set** | `nameField` (JavaFX) | `!name.matches("[a-zA-Z\\s]+")` | `"Name can only contain letters and spaces."` |
+| **Course Selection** | `courseBox` (Swing) | `course == null || course.isEmpty()` | `"Please select a course."` |
+| **Terms Agreement** | `agreeBox` (Swing) | `!agreed` | `"You must agree to the terms before submitting."` |
+
+### 3. Visual Feedback States
+- **Validation Failure**: The result label displays in red (`#d32f2f`) with a `❌` indicator and the specific failure reason.
+- **Validation Success**: The result label displays in green (`#2e7d32`) with a `✔ Registered successfully!` banner and a consolidated summary of all entered details (Name, Course, Semester, SGPA, and Letter Grade).
 
 ---
 
