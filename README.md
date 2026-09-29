@@ -92,20 +92,79 @@ Everything lives in one file — no CSS, no FXML, no extra windows.
 
 ## Prerequisites
 
-- **Java 17+** (tested with Java 26)
-- **Maven 3.8+**
+- **Java JDK 17+** (tested up to Java 26)
+- **Apache Maven 3.8+**
 
 ---
 
-## How to Run
+## Build & Execution Lifecycle
 
-### Option 1: Terminal
+### 1. Compile the Project
+To compile source code without starting the graphical interface:
+```bash
+mvn clean compile
+```
+
+### 2. Launch the Application
+
+#### Option A: Maven CLI (Recommended)
+Launch directly using the JavaFX Maven Plugin:
 ```bash
 mvn javafx:run
 ```
 
-### Option 2: IDE "Run / Debug"
-You can directly click **Run** or **Debug** in your IDE (IntelliJ IDEA, VS Code, Antigravity IDE, NetBeans) thanks to the built-in launcher pattern and `exec-maven-plugin` configuration.
+#### Option B: IDE "Run / Debug"
+You can directly click **Run** or **Debug** on `RegistrationForm.java` in any major IDE (IntelliJ IDEA, Eclipse, VS Code, Antigravity IDE, NetBeans). The `main` method uses standard launcher delegation `Application.launch(App.class, args)` and the project is configured with `exec-maven-plugin`.
+
+### 3. Package to JAR
+To package the project into a distributable JAR file:
+```bash
+mvn clean package
+```
+This produces `registration-form-1.0-SNAPSHOT.jar` inside the `target/` directory.
+
+---
+
+## JVM Modularity & `--add-exports` Flag
+
+Under modern Java versions (JDK 17 through 26+), the **Java Platform Module System (JPMS)** enforces strict encapsulation on internal and cross-toolkit packages.
+
+Because this application bridges Swing and JavaFX via `javafx.embed.swing.SwingNode`, the JavaFX runtime requires explicit module access permissions to the unnamed module. This is configured in `pom.xml` via the `javafx-maven-plugin`:
+
+```xml
+<configuration>
+    <mainClass>com.csc360.RegistrationForm</mainClass>
+    <options>
+        <option>--add-exports=javafx.swing/javafx.embed.swing=ALL-UNNAMED</option>
+    </options>
+</configuration>
+```
+
+> [!NOTE]
+> If launching the JAR directly outside Maven via standard `java`, pass the export option to prevent encapsulation errors:
+> ```bash
+> java --add-exports=javafx.swing/javafx.embed.swing=ALL-UNNAMED -jar target/registration-form-1.0-SNAPSHOT.jar
+> ```
+
+---
+
+## Troubleshooting & FAQs
+
+### 1. `java.lang.IllegalAccessError: superclass access check failed`
+- **Root Cause**: The JVM module system blocked access to `javafx.embed.swing`.
+- **Resolution**: Launch via `mvn javafx:run` which passes the `--add-exports` flag automatically, or add `--add-exports=javafx.swing/javafx.embed.swing=ALL-UNNAMED` to your IDE's VM options.
+
+### 2. `UnsupportedClassVersionError: ... has been compiled by a more recent version of the Java Runtime`
+- **Root Cause**: The active Java runtime is older than JDK 17.
+- **Resolution**: Check your installed Java version with `java -version` and set your `JAVA_HOME` environment variable to point to JDK 17 or higher.
+
+### 3. `GraphicsEnvironment.isHeadless() returns true` / `HeadlessException`
+- **Root Cause**: Attempting to launch the desktop application in a headless CI/CD container or remote shell without an active window display server.
+- **Resolution**: Run within a desktop environment, or configure a virtual frame buffer such as `xvfb-run mvn javafx:run` on Linux systems.
+
+### 4. Swing and JavaFX DPI Scaling Differences on Windows
+- **Root Cause**: On high-DPI displays (125% or 150% scaling), Swing and JavaFX calculate subpixel anti-aliasing independently.
+- **Resolution**: The layout utilizes responsive insets and centered alignment (`Pos.CENTER_LEFT`) to prevent visual clipping. If needed, pass `-Dsun.java2d.uiScale=1.0` as a JVM argument.
 
 ---
 
