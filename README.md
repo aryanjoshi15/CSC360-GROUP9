@@ -212,6 +212,66 @@ Because this application bridges Swing and JavaFX via `javafx.embed.swing.SwingN
 
 ---
 
+## Component Interaction Walkthrough
+
+Here is the exact lifecycle of user actions and cross-toolkit event dispatches:
+
+1. **Initialization**:
+   - The JavaFX stage is configured with a 420×520 scene.
+   - For each Swing component (`courseBox`, `fallRadio`, `springRadio`, `summerRadio`, `sgpaSlider`, `agreeBox`), a `SwingNode` is created on the JavaFX Application Thread, while component initialization and `.setContent(...)` are dispatched onto the Swing Event Dispatch Thread (EDT).
+   - Default selections: Course dropdown defaults to `Java`, Semester defaults to `Fall`, SGPA slider defaults to `3.5` with label `"SGPA: 3.5 / 4.0 (Grade: A)"`.
+
+2. **Real-Time Slider Dragging**:
+   ```text
+   User drags JSlider (Swing)
+     └─► ChangeListener fires on Swing EDT
+           └─► Computes SGPA = value / 10.0 and letter grade via getGrade()
+                 └─► Dispatches Platform.runLater(...) to JavaFX Thread
+                       └─► Updates JavaFX sgpaLabel with formatted text
+   ```
+
+3. **Form Submission & Cross-Thread Validation**:
+   ```text
+   User clicks "Submit" (JavaFX Button)
+     └─► onAction handler triggers on JavaFX Application Thread
+           └─► Extracts nameField.getText()
+                 └─► Dispatches SwingUtilities.invokeLater(...) to Swing EDT
+                       ├─► Extracts JComboBox, JRadioButton, JSlider, JCheckBox state
+                       ├─► Performs sequential validation checks
+                       └─► Dispatches Platform.runLater(...) to JavaFX Thread
+                             └─► Applies CSS styling (#d32f2f for error / #2e7d32 for success)
+                             └─► Updates resultLabel text with error or registration summary
+   ```
+
+---
+
+## Developer Guide: Extending the Form
+
+To integrate additional UI controls while maintaining strict thread safety and toolkit interoperability:
+
+### Adding a New Swing Component
+1. Create a `SwingNode` wrapper on the JavaFX thread:
+   ```java
+   SwingNode customNode = new SwingNode();
+   ```
+2. Instantiate and attach your Swing component on the EDT:
+   ```java
+   SwingUtilities.invokeLater(() -> {
+       JSpinner customSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
+       customNode.setContent(customSpinner);
+   });
+   ```
+3. Add `customNode` to the root `VBox` layout.
+4. Read its state inside the Submit handler's `SwingUtilities.invokeLater()` block.
+
+### Adding a New JavaFX Control
+1. Instantiate the control directly on the JavaFX thread (e.g., `DatePicker datePicker = new DatePicker();`).
+2. Add the control directly to the `VBox` layout.
+3. Read its value directly in the button's `setOnAction` handler prior to delegating to Swing.
+
+---
+
 ## Authors
 
 **CSC 360 — Group 9**
+
