@@ -74,14 +74,6 @@ public class RegistrationForm {
             nameField.setPromptText("Enter your name");
             nameField.setMaxWidth(260);
 
-            // Real-time input filter: allow only letters and spaces (block numbers & special characters)
-            nameField.setTextFormatter(new TextFormatter<>(change -> {
-                if (change.getControlNewText().matches("[a-zA-Z\\s]*")) {
-                    return change;
-                }
-                return null;
-            }));
-
             // ==================== Swing Components ====================
 
             // 1) Course dropdown (JComboBox)
