@@ -16,6 +16,10 @@ This project creates one JavaFX window containing both **JavaFX** and **Swing** 
 - **Swing components** are created on the Event Dispatch Thread (`SwingUtilities.invokeLater`)
 - **JavaFX controls** are updated on the JavaFX Application Thread (`Platform.runLater`)
 
+## Preview
+
+<img src="img/preview.jpg" width="250">
+
 ### Key Features
 - **Real-Time Input Filtering**: The student name field automatically blocks numbers and special characters as the user types using a JavaFX `TextFormatter`.
 - **Form Validation**: Comprehensive checks ensure all fields are properly completed and mandatory terms are accepted before submission.
