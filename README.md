@@ -129,49 +129,6 @@ This produces `registration-form-1.0-SNAPSHOT.jar` inside the `target/` director
 
 ---
 
-## JVM Modularity & `--add-exports` Flag
-
-Under modern Java versions (JDK 17 through 26+), the **Java Platform Module System (JPMS)** enforces strict encapsulation on internal and cross-toolkit packages.
-
-Because this application bridges Swing and JavaFX via `javafx.embed.swing.SwingNode`, the JavaFX runtime requires explicit module access permissions to the unnamed module. This is configured in `pom.xml` via the `javafx-maven-plugin`:
-
-```xml
-<configuration>
-    <mainClass>com.csc360.RegistrationForm</mainClass>
-    <options>
-        <option>--add-exports=javafx.swing/javafx.embed.swing=ALL-UNNAMED</option>
-    </options>
-</configuration>
-```
-
-> [!NOTE]
-> If launching the JAR directly outside Maven via standard `java`, pass the export option to prevent encapsulation errors:
-> ```bash
-> java --add-exports=javafx.swing/javafx.embed.swing=ALL-UNNAMED -jar target/registration-form-1.0-SNAPSHOT.jar
-> ```
-
----
-
-## Troubleshooting & FAQs
-
-### 1. `java.lang.IllegalAccessError: superclass access check failed`
-- **Root Cause**: The JVM module system blocked access to `javafx.embed.swing`.
-- **Resolution**: Launch via `mvn javafx:run` which passes the `--add-exports` flag automatically, or add `--add-exports=javafx.swing/javafx.embed.swing=ALL-UNNAMED` to your IDE's VM options.
-
-### 2. `UnsupportedClassVersionError: ... has been compiled by a more recent version of the Java Runtime`
-- **Root Cause**: The active Java runtime is older than JDK 17.
-- **Resolution**: Check your installed Java version with `java -version` and set your `JAVA_HOME` environment variable to point to JDK 17 or higher.
-
-### 3. `GraphicsEnvironment.isHeadless() returns true` / `HeadlessException`
-- **Root Cause**: Attempting to launch the desktop application in a headless CI/CD container or remote shell without an active window display server.
-- **Resolution**: Run within a desktop environment, or configure a virtual frame buffer such as `xvfb-run mvn javafx:run` on Linux systems.
-
-### 4. Swing and JavaFX DPI Scaling Differences on Windows
-- **Root Cause**: On high-DPI displays (125% or 150% scaling), Swing and JavaFX calculate subpixel anti-aliasing independently.
-- **Resolution**: The layout utilizes responsive insets and centered alignment (`Pos.CENTER_LEFT`) to prevent visual clipping. If needed, pass `-Dsun.java2d.uiScale=1.0` as a JVM argument.
-
----
-
 ## Grading Scale (Out of 4.0)
 
 | SGPA Range  | Letter Grade |
@@ -249,33 +206,12 @@ Here is the exact lifecycle of user actions and cross-toolkit event dispatches:
 
 ---
 
-## Developer Guide: Extending the Form
-
-To integrate additional UI controls while maintaining strict thread safety and toolkit interoperability:
-
-### Adding a New Swing Component
-1. Create a `SwingNode` wrapper on the JavaFX thread:
-   ```java
-   SwingNode customNode = new SwingNode();
-   ```
-2. Instantiate and attach your Swing component on the EDT:
-   ```java
-   SwingUtilities.invokeLater(() -> {
-       JSpinner customSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
-       customNode.setContent(customSpinner);
-   });
-   ```
-3. Add `customNode` to the root `VBox` layout.
-4. Read its state inside the Submit handler's `SwingUtilities.invokeLater()` block.
-
-### Adding a New JavaFX Control
-1. Instantiate the control directly on the JavaFX thread (e.g., `DatePicker datePicker = new DatePicker();`).
-2. Add the control directly to the `VBox` layout.
-3. Read its value directly in the button's `setOnAction` handler prior to delegating to Swing.
-
----
-
 ## Authors
 
-**CSC 360 — Group 9**
+**CSC360 - Group 9**
 
+| Name          | GitHub                                          | ID        |
+| ------------- | ----------------------------------------------- | --------- |
+| Jevis Maniyar | [Quack-Duck12](https://github.com/Quack-Duck12) | AU2520311 |
+| Aryan Joshi   | [aryanjoshi15](https://github.com/aryanjoshi15) | AU2500017 |                                              | —         |
+| S. Kailash    | [kailash1557](https://github.com/kailash1557)   | AU2520033 |
