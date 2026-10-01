@@ -1,6 +1,6 @@
 # Registration Form — JavaFX + Swing Demo
 
-[![Java Version](https://img.shields.io/badge/Java-17%2B-orange?logo=openjdk)](https://www.java.com/)
+[![Java Version](https://img.shields.io/badge/Java-25%2B-orange?logo=openjdk)](https://www.java.com/)
 [![JavaFX](https://img.shields.io/badge/JavaFX-27-blue?logo=java)](https://openjfx.io/)
 [![Maven](https://img.shields.io/badge/Maven-3.8%2B-red?logo=apache-maven)](https://maven.apache.org/)
 
@@ -82,7 +82,7 @@ Everything lives in one file — no CSS, no FXML, no extra windows.
 
 ## Prerequisites
 
-- **Java JDK 17+** (tested up to Java 26)
+- **Java JDK 25+** (tested up to Java 26)
 - **Apache Maven 3.8+**
 
 ---
