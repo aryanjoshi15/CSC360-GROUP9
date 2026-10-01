@@ -5,7 +5,6 @@
 [![Maven](https://img.shields.io/badge/Maven-3.8%2B-red?logo=apache-maven)](https://maven.apache.org/)
 
 [![Closed Issues](https://img.shields.io/github/issues-closed/aryanjoshi15/CSC360-GROUP9?logo=github)](https://github.com/aryanjoshi15/CSC360-GROUP9/issues?q=is%3Aissue+state%3Aclosed)
-
 [![Open Issues](https://img.shields.io/github/issues/aryanjoshi15/CSC360-GROUP9?logo=github)](https://github.com/aryanjoshi15/CSC360-GROUP9/issues)
 
 A simple desktop registration form built for **CSC 360** that demonstrates JavaFX and Swing components working together in a single window using `SwingNode`.
