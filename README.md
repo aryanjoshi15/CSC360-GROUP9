@@ -1,9 +1,8 @@
 # Registration Form — JavaFX + Swing Demo
 
-![Java Version](https://img.shields.io/badge/Java-17%2B-orange?logo=openjdk)
-![JavaFX](https://img.shields.io/badge/JavaFX-27-blue?logo=java)
-![Maven](https://img.shields.io/badge/Maven-3.8%2B-red?logo=apache-maven)
-![Course](https://img.shields.io/badge/Course-CSC%20360-informational)
+[![Java Version](https://img.shields.io/badge/Java-17%2B-orange?logo=openjdk)](https://www.java.com/)
+[![JavaFX](https://img.shields.io/badge/JavaFX-27-blue?logo=java)](https://openjfx.io/)
+[![Maven](https://img.shields.io/badge/Maven-3.8%2B-red?logo=apache-maven)](https://maven.apache.org/)
 
 A simple desktop registration form built for **CSC 360** that demonstrates JavaFX and Swing components working together in a single window using `SwingNode`.
 
@@ -18,7 +17,7 @@ This project creates one JavaFX window containing both **JavaFX** and **Swing** 
 
 ## Preview
 
-<img src="img/preview.jpg" width="250">
+<img src="img/preview.jpg" width="200"> <img src="img/preview2.jpg" width="200">
 
 ### Key Features
 - **Form Validation**: Comprehensive checks ensure all fields are properly completed and mandatory terms are accepted before submission.
