@@ -123,13 +123,14 @@ public class RegistrationForm {
                 labels.put(40, new JLabel("4.0"));
                 sgpaSlider.setLabelTable(labels);
 
-                // Live-update the JavaFX label as slider moves
+                // Live-update the JavaFX label as slider moves and repaint to prevent visual artifacts
                 sgpaSlider.addChangeListener(e -> {
                     double gpa = sgpaSlider.getValue() / 10.0;
                     String grade = getGrade(gpa);
                     Platform.runLater(() ->
                         sgpaLabel.setText(String.format("SGPA: %.1f / 4.0 (Grade: %s)", gpa, grade))
                     );
+                    SwingUtilities.invokeLater(() -> sgpaSlider.repaint());
                 });
                 sgpaNode.setContent(sgpaSlider);
             });

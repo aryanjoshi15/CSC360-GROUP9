@@ -175,9 +175,11 @@ Here is the exact lifecycle of user actions and cross-toolkit event dispatches:
    ```text
    User drags JSlider (Swing)
      └─► ChangeListener fires on Swing EDT
-           └─► Computes SGPA = value / 10.0 and letter grade via getGrade()
-                 └─► Dispatches Platform.runLater(...) to JavaFX Thread
-                       └─► Updates JavaFX sgpaLabel with formatted text
+           ├─► Computes SGPA = value / 10.0 and letter grade via getGrade()
+           │     └─► Dispatches Platform.runLater(...) to JavaFX Thread
+           │           └─► Updates JavaFX sgpaLabel with formatted text
+           └─► Dispatches SwingUtilities.invokeLater(...) to Swing EDT
+                 └─► Calls repaint() on JSlider to prevent visual smearing/ghosting
    ```
 
 3. **Form Submission & Cross-Thread Validation**:
